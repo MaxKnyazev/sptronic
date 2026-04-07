@@ -21,6 +21,7 @@ export const TicketDetailsPage = () => {
   const addUserFile = useTicketStore((s) => s.addUserFile);
   const addLogFile = useTicketStore((s) => s.addLogFile);
   const closeTicket = useTicketStore((s) => s.closeTicket);
+  const rateSupport = useTicketStore((s) => s.rateSupport);
 
   const [msg, setMsg] = useState('');
   const [fileName, setFileName] = useState('new-file.txt');
@@ -103,7 +104,6 @@ export const TicketDetailsPage = () => {
               variant="contained"
               onClick={() => {
                 closeTicket(ticket.id, 'Мария Support');
-                setRatingOpen(true);
               }}
             >
               Закрыть тикет
@@ -113,9 +113,29 @@ export const TicketDetailsPage = () => {
             </Button>
           </>
         )}
+        {!isSupportRole && ticket.status === 'закрыт' && (
+          <Button variant="outlined" onClick={() => setRatingOpen(true)}>
+            Оставить отзыв саппорту
+          </Button>
+        )}
       </Stack>
+      {!isSupportRole && ticket.status === 'закрыт' && ticket.supportRating && (
+        <Paper sx={{ p: 2 }}>
+          <Typography variant="h6">Ваш отзыв</Typography>
+          <Typography variant="body2">Оценка: {ticket.supportRating}/5</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {ticket.supportReviewComment || 'Без комментария'}
+          </Typography>
+        </Paper>
+      )}
       <ComplaintModal open={complaintOpen} onClose={() => setComplaintOpen(false)} />
-      <SupportRatingModal open={ratingOpen} onClose={() => setRatingOpen(false)} />
+      <SupportRatingModal
+        open={ratingOpen}
+        onClose={() => setRatingOpen(false)}
+        initialValue={ticket.supportRating ?? 5}
+        initialComment={ticket.supportReviewComment ?? ''}
+        onSubmit={(value, comment) => rateSupport(ticket.id, value, comment)}
+      />
       <TemporaryBlockModal open={blockOpen} onClose={() => setBlockOpen(false)} />
     </Stack>
   );

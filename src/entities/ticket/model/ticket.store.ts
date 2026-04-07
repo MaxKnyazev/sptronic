@@ -17,6 +17,8 @@ export type Ticket = {
   logFiles: string[];
   chat: { from: 'user' | 'support'; text: string }[];
   closedBy?: string;
+  supportRating?: number;
+  supportReviewComment?: string;
 };
 
 type TicketState = {
@@ -28,6 +30,7 @@ type TicketState = {
   addLogFile: (id: string, file: string) => void;
   addMessage: (id: string, from: 'user' | 'support', text: string) => void;
   closeTicket: (id: string, supportName: string) => void;
+  rateSupport: (id: string, rating: number, comment: string) => void;
 };
 
 const seedTickets: Ticket[] = [
@@ -79,6 +82,8 @@ const seedTickets: Ticket[] = [
       { from: 'support', text: 'Исправили конфигурацию фильтра, проверьте.' },
     ],
     closedBy: 'Мария Support',
+    supportRating: 5,
+    supportReviewComment: 'Проблему решили быстро, спасибо.',
   },
   {
     id: 'TCK-1004',
@@ -141,6 +146,8 @@ const seedTickets: Ticket[] = [
       { from: 'support', text: 'Оптимизировали кэш, должно стать быстрее.' },
     ],
     closedBy: 'Мария Support',
+    supportRating: 4,
+    supportReviewComment: 'Все хорошо, но ответили не сразу.',
   },
   {
     id: 'TCK-1008',
@@ -187,6 +194,8 @@ const seedTickets: Ticket[] = [
       { from: 'support', text: 'Обновили TTL сессии, проблема должна уйти.' },
     ],
     closedBy: 'Мария Support',
+    supportRating: 5,
+    supportReviewComment: 'Отличная поддержка.',
   },
 ];
 
@@ -246,6 +255,12 @@ export const useTicketStore = create<TicketState>((set) => ({
         ticket.id === id
           ? { ...ticket, status: 'закрыт', closedBy: supportName, closedAt: new Date().toLocaleString('ru-RU', { hour12: false }) }
           : ticket,
+      ),
+    })),
+  rateSupport: (id, rating, comment) =>
+    set((state) => ({
+      tickets: state.tickets.map((ticket) =>
+        ticket.id === id ? { ...ticket, supportRating: rating, supportReviewComment: comment } : ticket,
       ),
     })),
 }));

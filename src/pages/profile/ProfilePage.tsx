@@ -13,7 +13,6 @@ export const ProfilePage = () => {
   const [draft, setDraft] = useState({
     fullName: profile.fullName,
     login: profile.login,
-    password: profile.password,
   });
   return (
     <Stack spacing={2}>
@@ -34,13 +33,6 @@ export const ProfilePage = () => {
             disabled={!editMode}
             onChange={(e) => setDraft((s) => ({ ...s, login: e.target.value }))}
           />
-          <TextField
-            label="Пароль"
-            value={editMode ? draft.password : profile.password}
-            disabled={!editMode}
-            type="password"
-            onChange={(e) => setDraft((s) => ({ ...s, password: e.target.value }))}
-          />
           <Typography variant="subtitle2">Доступные модули</Typography>
           <Typography>{profile.modules.join(', ')}</Typography>
           {editMode ? (
@@ -54,9 +46,14 @@ export const ProfilePage = () => {
               Сохранить
             </Button>
           ) : (
-            <Button variant="outlined" onClick={() => setEditMode(true)}>
-              Редактировать
-            </Button>
+            <Stack direction="row" spacing={1}>
+              <Button variant="outlined" onClick={() => setEditMode(true)}>
+                Редактировать
+              </Button>
+              <Button variant="outlined" disabled>
+                Сбросить пароль
+              </Button>
+            </Stack>
           )}
         </Stack>
       </Paper>
