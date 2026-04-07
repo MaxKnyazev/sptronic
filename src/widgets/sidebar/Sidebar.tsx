@@ -34,7 +34,7 @@ const navByRole = {
   admin: [
     { to: '/admin/dashboard', label: 'Дашборд', icon: <DashboardIcon /> },
     { to: '/admin/all-users', label: 'Все пользователи', icon: <PeopleIcon /> },
-    { to: '/admin/users', label: 'Пользователи', icon: <PersonIcon /> },
+    { to: '/admin/users', label: 'Клиенты', icon: <PersonIcon /> },
     { to: '/admin/supports', label: 'Саппорты', icon: <SupportAgentIcon /> },
     { to: '/support/all', label: 'Все тикеты', icon: <AssignmentIcon /> },
     { to: '/profile', label: 'Профиль', icon: <PersonIcon /> },
@@ -107,6 +107,8 @@ export const Sidebar = () => {
           <Button variant="outlined" onClick={() => navigate('/auth')}>
             Сменить роль
           </Button>
+          {role === 'admin' && <Button variant="outlined">Зарегистрировать саппорта</Button>}
+          <Button variant="outlined">RU / EN</Button>
         </Stack>
       </Box>
     </Paper>

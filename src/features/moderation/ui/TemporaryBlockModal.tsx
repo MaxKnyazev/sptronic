@@ -11,16 +11,17 @@ import TextField from '@mui/material/TextField';
 type Props = {
   open: boolean;
   onClose: () => void;
+  userLabel?: string;
 };
 
 const options = [1, 2, 4, 8, 12];
 
-export const TemporaryBlockModal = ({ open, onClose }: Props) => {
+export const TemporaryBlockModal = ({ open, onClose, userLabel }: Props) => {
   const [hours, setHours] = useState('1');
   const [reason, setReason] = useState('');
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogTitle>Временная блокировка пользователя</DialogTitle>
+      <DialogTitle>Временная блокировка {userLabel ? `(${userLabel})` : 'пользователя'}</DialogTitle>
       <DialogContent>
         <Stack spacing={2} pt={1}>
           <TextField select label="Срок блокировки" value={hours} onChange={(e) => setHours(e.target.value)}>

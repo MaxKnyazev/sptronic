@@ -39,6 +39,9 @@ export const AuthPage = () => {
           <TextField label="Email" fullWidth />
           <TextField label="Логин" fullWidth />
           <TextField label="Пароль" type="password" fullWidth />
+          <TextField label="sptronic" fullWidth />
+          <TextField label="combilodaer" fullWidth />
+          <TextField label="chiptunningpro" fullWidth />
           {mode === 1 && <TextField label="Подтверждение пароля" type="password" fullWidth />}
           <Divider />
           <Typography variant="subtitle2">Тестовый переключатель ролей</Typography>
