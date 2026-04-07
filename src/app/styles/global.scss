@@ -1,0 +1,15 @@
+@use './tokens.scss' as *;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: $text-main;
+  background: $bg-page;
+}
+
+#root {
+  min-height: 100vh;
+}
